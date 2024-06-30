@@ -1,0 +1,41 @@
+{{ request.user }}
+<form id="login-form">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required>
+    </div>
+    <div>
+      <button type="submit">Register</button>
+    </div>
+  </form>
+  
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+  
+      // Récupérer les données du formulaire
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+  
+      // Envoyer les données au endpoint
+      fetch('login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username: username, password: password})
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    });
+  </script>
+  
