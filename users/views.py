@@ -1,17 +1,18 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 
 User = get_user_model()
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def register(request):
     username = request.data['username']
     password = request.data['password']
-    email = request.data['email']
     try:
-        user = User.objects.create_user(username, password, email)
+        user = User.objects.create_user(username, password)
         user.save()
         token, created = Token.objects.get_or_create(user=user)
         login(request, user)
@@ -25,6 +26,7 @@ def register_page(request):
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 
+@permission_classes([AllowAny])
 class LoginView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
