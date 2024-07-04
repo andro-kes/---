@@ -1,12 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ProfileViewSet, create_profile_page
+from .views import create_profile, create_profile_page
 
-router = DefaultRouter()
-# pd - profilesmodel
-router.register(r'pm', ProfileViewSet, basename='pm')
+
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('api/create_profile/', create_profile),
     path('', create_profile_page, name='create_profile_page'),
 ]
