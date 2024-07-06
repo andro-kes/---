@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     # local
     'users',
     'profiles',
-    
 ]
 
 AUTH_USER_MODEL = 'users.User'
