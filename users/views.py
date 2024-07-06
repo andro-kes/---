@@ -12,7 +12,7 @@ def register(request):
     username = request.data['username']
     password = request.data['password']
     try:
-        user = User.objects.create_user(username, password)
+        user = User.objects.create_user(username, email='', password=password)
         user.save()
         token, created = Token.objects.get_or_create(user=user)
         login(request, user)
